@@ -692,6 +692,7 @@ message AggregatorSpec {
     ST_EXTENT = 32;
     ST_UNION = 33;
     ST_COLLECT = 34;
+    COVAR_POP = 35;
   }
 
   enum Type {

@@ -188,6 +188,7 @@ var AggregateOpReverseMap = map[Operator]string{
 	CountOp:           "count",
 	CorrOp:            "corr",
 	CountRowsOp:       "count_rows",
+	CovarPopOp:        "covar_pop",
 	MaxOp:             "max",
 	MinOp:             "min",
 	SumIntOp:          "sum_int",
@@ -307,7 +308,8 @@ func AggregateIgnoresNulls(op Operator) bool {
 	case AnyNotNullAggOp, AvgOp, BitAndAggOp, BitOrAggOp, BoolAndOp, BoolOrOp,
 		ConstNotNullAggOp, CorrOp, CountOp, MaxOp, MinOp, SqrDiffOp, StdDevOp,
 		StringAggOp, SumOp, SumIntOp, VarianceOp, XorAggOp, PercentileDiscOp,
-		PercentileContOp, STMakeLineOp, STCollectOp, STExtentOp, STUnionOp, StdDevPopOp, VarPopOp:
+		PercentileContOp, STMakeLineOp, STCollectOp, STExtentOp, STUnionOp, StdDevPopOp,
+		VarPopOp, CovarPopOp:
 		return true
 
 	case ArrayAggOp, ConcatAggOp, ConstAggOp, CountRowsOp, FirstAggOp, JsonAggOp,
@@ -330,7 +332,8 @@ func AggregateIsNullOnEmpty(op Operator) bool {
 		ConstNotNullAggOp, CorrOp, FirstAggOp, JsonAggOp, JsonbAggOp,
 		MaxOp, MinOp, SqrDiffOp, StdDevOp, STMakeLineOp, StringAggOp, SumOp, SumIntOp,
 		VarianceOp, XorAggOp, PercentileDiscOp, PercentileContOp,
-		JsonObjectAggOp, JsonbObjectAggOp, StdDevPopOp, STCollectOp, STExtentOp, STUnionOp, VarPopOp:
+		JsonObjectAggOp, JsonbObjectAggOp, StdDevPopOp, STCollectOp, STExtentOp, STUnionOp,
+		VarPopOp, CovarPopOp:
 		return true
 
 	case CountOp, CountRowsOp:
@@ -356,7 +359,8 @@ func AggregateIsNeverNullOnNonNullInput(op Operator) bool {
 		ConstNotNullAggOp, CountOp, CountRowsOp, FirstAggOp,
 		JsonAggOp, JsonbAggOp, MaxOp, MinOp, SqrDiffOp, STMakeLineOp,
 		StringAggOp, SumOp, SumIntOp, XorAggOp, PercentileDiscOp, PercentileContOp,
-		JsonObjectAggOp, JsonbObjectAggOp, StdDevPopOp, STCollectOp, STExtentOp, STUnionOp, VarPopOp:
+		JsonObjectAggOp, JsonbObjectAggOp, StdDevPopOp, STCollectOp, STExtentOp, STUnionOp,
+		VarPopOp, CovarPopOp:
 		return true
 
 	case VarianceOp, StdDevOp, CorrOp:
@@ -407,7 +411,8 @@ func AggregatesCanMerge(inner, outer Operator) bool {
 
 	case ArrayAggOp, AvgOp, ConcatAggOp, CorrOp, JsonAggOp, JsonbAggOp,
 		JsonObjectAggOp, JsonbObjectAggOp, PercentileContOp, PercentileDiscOp,
-		SqrDiffOp, STCollectOp, StdDevOp, StringAggOp, VarianceOp, StdDevPopOp, VarPopOp:
+		SqrDiffOp, STCollectOp, StdDevOp, StringAggOp, VarianceOp, StdDevPopOp,
+		VarPopOp, CovarPopOp:
 		return false
 
 	default:
@@ -426,7 +431,7 @@ func AggregateIgnoresDuplicates(op Operator) bool {
 	case ArrayAggOp, AvgOp, ConcatAggOp, CountOp, CorrOp, CountRowsOp, SumIntOp,
 		SumOp, SqrDiffOp, VarianceOp, StdDevOp, XorAggOp, JsonAggOp, JsonbAggOp,
 		StringAggOp, PercentileDiscOp, PercentileContOp, StdDevPopOp, STMakeLineOp,
-		VarPopOp, JsonObjectAggOp, JsonbObjectAggOp, STCollectOp:
+		VarPopOp, JsonObjectAggOp, JsonbObjectAggOp, STCollectOp, CovarPopOp:
 		return false
 
 	default:

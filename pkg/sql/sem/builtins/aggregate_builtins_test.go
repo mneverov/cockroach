@@ -262,6 +262,22 @@ func TestStdDevDecimalResultDeepCopy(t *testing.T) {
 	testAggregateResultDeepCopy(t, newDecimalStdDevAggregate, makeDecimalTestDatum(10))
 }
 
+func TestCorrIntResultDeepCopy(t *testing.T) {
+	defer leaktest.AfterTest(t)()
+	t.Run("all null", func(t *testing.T) {
+		testAggregateResultDeepCopy(t, newCorrAggregate, makeNullTestDatum(10))
+	})
+	t.Run("with null", func(t *testing.T) {
+		datum := makeTestWithNullDatum(10, makeIntTestDatum)
+		testAggregateResultDeepCopy(t, newCorrAggregate, datum)
+	})
+	t.Run("without null", func(t *testing.T) {
+		for i := 0; i < 1000; i++ {
+			testAggregateResultDeepCopy(t, newCorrAggregate, makeIntTestDatum(10))
+		}
+	})
+}
+
 func TestStdDevPopIntResultDeepCopy(t *testing.T) {
 	defer leaktest.AfterTest(t)()
 	testAggregateResultDeepCopy(t, newIntStdDevPopAggregate, makeIntTestDatum(10))
